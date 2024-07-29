@@ -12,7 +12,6 @@ class User(object):
                  line_id=None, line_name=None, station_id=None, station_name=None,
                  city_id=None, city_name=None, birth_dt=None, gender=None, icon=None,
                  week_id=None, time_id=None, position_id=None, width_id=None, ex_year=None, height=None, comment=None):
-        self.user_id = user_id
         self.user_name = user_name
         self.password = password
         self.icon = icon
@@ -21,6 +20,7 @@ class User(object):
         self.city_id = city_id
         self.city_name = city_name
         self.line_id = line_id
+        self.user_id = user_id
         self.line_name = line_name
         self.station_id = station_id
         self.station_name = station_name
