@@ -1,0 +1,9 @@
+INSERT INTO rival.u_position (user_id, position_id, register_dt, update_time) VALUES ('qwertyuiop', 1, '2019-05-25', null);
+INSERT INTO rival.u_position (user_id, position_id, register_dt, update_time) VALUES ('qwertyuiop', 3, '2019-05-25', null);
+INSERT INTO rival.u_position (user_id, position_id, register_dt, update_time) VALUES ('teaaaa', 1, '2019-05-25', null);
+INSERT INTO rival.u_position (user_id, position_id, register_dt, update_time) VALUES ('test1', 1, '2019-05-26', null);
+INSERT INTO rival.u_position (user_id, position_id, register_dt, update_time) VALUES ('test1', 5, '2019-05-26', null);
+INSERT INTO rival.u_position (user_id, position_id, register_dt, update_time) VALUES ('test2', 1, '2019-05-26', null);
+INSERT INTO rival.u_position (user_id, position_id, register_dt, update_time) VALUES ('test2', 5, '2019-05-26', null);
+INSERT INTO rival.u_position (user_id, position_id, register_dt, update_time) VALUES ('test3', 2, '2019-05-26', null);
+INSERT INTO rival.u_position (user_id, position_id, register_dt, update_time) VALUES ('yyyyy', 1, '2019-05-25', null);

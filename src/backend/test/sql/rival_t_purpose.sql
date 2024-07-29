@@ -1,0 +1,10 @@
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test11', '1', '2019-05-26', '2019-05-26 20:56:16');
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test12', '1', '2019-05-26', '2019-05-26 20:58:00');
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test13', '1', '2019-05-26', '2019-05-26 20:58:52');
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test21', '1', '2019-05-26', '2019-05-26 21:02:43');
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test21', '2', '2019-05-26', '2019-05-26 21:02:43');
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test23', '1', '2019-05-26', '2019-05-26 21:05:24');
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test31', '1', '2019-05-26', '2019-05-26 20:47:57');
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test32', '1', '2019-05-26', '2019-05-26 20:52:19');
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test33', '0', '2019-05-26', '2019-05-26 20:54:09');
+INSERT INTO rival.t_purpose (team_id, purpose_id, register_dt, update_time) VALUES ('test33', '1', '2019-05-26', '2019-05-26 20:54:09');

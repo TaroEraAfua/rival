@@ -1,0 +1,35 @@
+version: '3'
+services:
+  rival:
+    build: ./src
+    image: ubuntu
+    container_name: rival
+    volumes:
+       - './src/:/share/'
+    tty: true
+    ports:
+      - "2000:2000"
+      - "8080:8080"
+    command: /bin/sh
+  db:
+    build: ./mysql
+    container_name: rival2
+    command: mysqld
+      --character-set-server=utf8
+      --collation-server=utf8_unicode_ci
+      --skip-character-set-client-handshake
+    links:
+      - rival
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: rival
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: root
+      TZ: "Asia/Tokyo"
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - './src/:/share/'

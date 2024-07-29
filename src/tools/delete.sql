@@ -1,0 +1,16 @@
+DROP TABLE city_master;
+DROP TABLE const_master;
+DROP TABLE prefectures_master;
+DROP TABLE station_master;
+DROP TABLE t_challenge;
+DROP TABLE t_game_date;
+DROP TABLE t_level;
+DROP TABLE t_member_level;
+DROP TABLE t_message_log;
+DROP TABLE t_purpose;
+DROP TABLE t_week;
+DROP TABLE team_info;
+DROP TABLE team_profile;
+DROP table u_week;
+DROP table add_team;
+drop table user_info;

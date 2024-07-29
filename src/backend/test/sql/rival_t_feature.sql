@@ -1,0 +1,11 @@
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test11', 13, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test11', 19, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test12', 32, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test13', 25, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test13', 31, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test21', 11, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test23', 23, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test31', 20, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test32', 39, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test32', 40, '2019-05-26');
+INSERT INTO rival.t_feature (team_id, feature_id, register_dt) VALUES ('test33', 9, '2019-05-26');

@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "front": "npm --prefix frontend run docker",
+    "back": "python3 ./backend/srv.py -d",
+    "all": "npm --prefix frontend run docker & python3 ./backend/srv.py -d",
+    "install": "npm --prefix frontend install"
+  }
+}
