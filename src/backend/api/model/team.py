@@ -1,6 +1,7 @@
 # coding: utf-8
 import pymysql
 from util.setting import Setting
+from sqlalchemy.orm import relationship
 import api.common.sql as format
 import datetime
 import sys
@@ -59,5 +60,8 @@ class Team(object):
         self.exec_type = exec_type
         self.game_status = game_status
         self.challenge_status = challenge_status
+
+        self.challenges = relationship("Challenge", backref="team")
+        self.team_members = relationship("TeamMember", backref="team")
 
     # ... rest of the class methods remain unchanged ...
