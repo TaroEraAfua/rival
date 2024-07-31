@@ -1,6 +1,7 @@
 # coding: utf-8
 import pymysql
 from util.setting import Setting
+from orator.orm import has_many
 import api.common.sql as format
 import sys
 import api.common.constant as constant
@@ -10,6 +11,8 @@ class User(object):
 
     def __init__(self, user_id=None, user_name=None, password=None, prefecture_id=None, prefecture_name=None,
                  line_id=None, line_name=None, station_id=None, station_name=None,
+                 city_id=None, city_name=None, birth_dt=None, gender=None, icon=None,
+                 week_id=None, time_id=None, position_id=None, width_id=None, ex_year=None, height=None, comment=None):
                  city_id=None, city_name=None, birth_dt=None, gender=None, icon=None,
                  week_id=None, time_id=None, position_id=None, width_id=None, ex_year=None, height=None, comment=None):
         self.user_name = user_name
@@ -28,11 +31,15 @@ class User(object):
         self.gender = gender
         self.week_id = week_id
         self.time_id = time_id
+        self.week_id = week_id
+        self.time_id = time_id
         self.width_id = width_id
         self.height = height
         self.comment = comment
         self.ex_year = ex_year
         self.position_id = position_id
+        self.schedules = self.has_many('Schedule', 'user_id')
+        self.team_members = self.has_many('TeamMember', 'user_id')
 
     def to_dict(self):
         res = {
@@ -42,11 +49,15 @@ class User(object):
             'prefecture_id': self.prefecture_id,
             'prefecture_name': self.prefecture_name,
             'city_id': self.city_id,
+            'prefecture_name': self.prefecture_name,
+            'city_id': self.city_id,
             'city_name': self.city_name,
             "line_id": self.line_id,
             "line_name": self.line_name,
             "station_id": self.station_id,
             "station_name": self.station_name,
+            'birth_dt': self.birth_dt,
+            'gender': self.gender,
             'birth_dt': self.birth_dt,
             'icon': self.icon,
             'gender': self.gender,
@@ -54,6 +65,8 @@ class User(object):
             "time_id": self.time_id,
             "width_id": self.width_id,
             "height": self.height,
+            "message": self.comment,
+            "ex_year": self.ex_year,
             "message": self.comment,
             "ex_year": self.ex_year,
             "position_id": self.position_id,
