@@ -1,3 +1,4 @@
+
 # coding: utf-8
 import datetime
 import json
@@ -13,6 +14,7 @@ from api.common.sql import team_sql_format, search_team_format
 from api.common.unit import convert_team_data, convert_user_data, format_return_param
 from api.model.const import Const
 
+from api.model.schedules import Schedule
 from api.common.unit import debug_log
 
 
@@ -252,17 +254,20 @@ def update_user(user_id, user_name, prefecture, city, gender, birth_dt, mail,
 
     return response
 
-def check_favorite_team(user_id, team_id):
-    to_day = datetime.datetime.today()
-    register_dt = to_day.strftime("%Y-%m-%d")
-    update_time = to_day.strftime("%Y-%m-%d %H:%M:%S")
 
-    param = {
-        'user_id': user_id,
-        'team_id': team_id,
-        'register_dt': register_dt,
-        'update_time': update_time,
-    }
-
-    result = User.check_favorite_team(param)
-    return result
+def get_user_schedule(user_id):
+    try:
+        schedules = Schedule.query.filter_by(user_id=user_id).all()
+        schedule_list = [schedule.to_dict() for schedule in schedules]
+        response = format.format_return_param(
+            constant.RESULT_CODE_OK,
+            constant.MESSAGE_OK_001,
+            {'schedules': schedule_list}
+        )
+    except Exception as e:
+        debug_log(e)
+        response = format.format_return_param(
+            constant.RESULT_CODE_ERR_SYSTEM,
+            constant.MESSAGE_ERR_SYSTEM
+        )
+    return response
