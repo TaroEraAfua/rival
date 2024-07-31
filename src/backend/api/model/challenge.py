@@ -1,6 +1,7 @@
 # coding: utf-8
 import pymysql
 from util.setting import Setting
+from sqlalchemy.orm import relationship
 import api.common.sql as format
 
 
@@ -13,6 +14,8 @@ class Challenge(object):
                  send_team_id=None
                  ):
         self.challenge_id = challenge_id
+        # Assuming other fields are already correctly defined
+        # Add relationships
         self.team_id = team_id
         self.send_team_id = send_team_id
         self.challenge_status = challenge_status
@@ -23,6 +26,8 @@ class Challenge(object):
         self.exec_type = exec_type
         self.comment = comment
         self.register_dt = register_dt
+        self.teams = relationship("Team", back_populates="challenges")
+        self.chats = relationship("Chat", back_populates="challenge")
         self.update_time = update_time
 
     def to_dict(self):
