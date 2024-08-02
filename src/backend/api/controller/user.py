@@ -1,5 +1,6 @@
 # coding: utf-8
 import datetime
+from api.model.schedules import Schedule
 import json
 import sys
 import os
@@ -10,10 +11,14 @@ import api.common.constant as constant
 from api.model.team import Team
 from api.model.user import User
 from api.common.sql import team_sql_format, search_team_format
+from api.common.sql import check_schedule_conflict
 from api.common.unit import convert_team_data, convert_user_data, format_return_param
 from api.model.const import Const
-
 from api.common.unit import debug_log
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from api.common.database import db_session
+from api.util.logging import Logger
 
 
 def get_user(user_id):
@@ -266,3 +271,50 @@ def check_favorite_team(user_id, team_id):
 
     result = User.check_favorite_team(param)
     return result
+
+def update_schedule(schedule_id, user_id, title, description, start_time, end_time):
+    try:
+        # Validate schedule_id and user_id
+        schedule = db_session.query(Schedule).filter_by(schedule_id=schedule_id, user_id=user_id).first()
+        if not schedule:
+            return format_return_param(constant.RESULT_CODE_ERR, "Invalid schedule_id or user_id")
+
+        # Validate start_time and end_time
+        if not isinstance(start_time, datetime.datetime) or not isinstance(end_time, datetime.datetime):
+            return format_return_param(constant.RESULT_CODE_ERR, "Invalid datetime format")
+        if start_time >= end_time:
+            return format_return_param(constant.RESULT_CODE_ERR, "start_time must be before end_time")
+
+        # Check for conflicting schedules
+        if check_schedule_conflict(user_id, start_time, end_time, schedule_id):
+            return format_return_param(constant.RESULT_CODE_ERR, "Conflicting schedule exists")
+
+        # Update the schedule
+        schedule.title = title
+        schedule.description = description
+        schedule.start_time = start_time
+        schedule.end_time = end_time
+        schedule.update_time = datetime.datetime.utcnow()
+        db_session.commit()
+
+        # Log the update action
+        logger = Logger()
+        logger.audit_log(datetime.datetime.utcnow(), user_id, schedule_id, "Schedule updated")
+
+        return format_return_param(constant.RESULT_CODE_OK, "Schedule updated successfully")
+    except Exception as e:
+        db_session.rollback()
+        debug_log(e)
+        return format_return_param(constant.RESULT_CODE_ERR_SYSTEM, constant.MESSAGE_ERR_SYSTEM)
+
+# Helper function to check for schedule conflicts
+def check_schedule_conflict(user_id, start_time, end_time, exclude_schedule_id=None):
+    # This function should check for any schedules that overlap with the given time range
+    # excluding the schedule with exclude_schedule_id if provided.
+    # For simplicity, we assume the function exists in sql.py and returns True if a conflict exists.
+    return db_session.query(Schedule).filter(
+        Schedule.user_id == user_id,
+        Schedule.end_time > start_time,
+        Schedule.start_time < end_time,
+        Schedule.schedule_id != exclude_schedule_id
+    ).count() > 0

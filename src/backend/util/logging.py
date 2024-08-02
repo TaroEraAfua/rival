@@ -41,6 +41,14 @@ class Logger:
         # handler.setFormatter(formatter)
         # self.logger.addHandler(handler)
 
+    def audit_log(self, timestamp, user_id, schedule_id, action):
+        audit_message = f"AUDIT - Timestamp: {timestamp}, User ID: {user_id}, Schedule ID: {schedule_id}, Action: {action}"
+        # Assuming there is a separate audit log file or database table for audit logs
+        # Here we are just using the same error log file for demonstration purposes
+        audit_filename = '/var/log/rival/audit.log'
+        with open(audit_filename, 'a') as audit_file:
+            audit_file.write(audit_message + '\n')
+
     def cre_msg(self, code, msg='System error'):
         called_filename = inspect.currentframe().f_back.f_back.f_back.f_code.co_filename
         called_function = inspect.currentframe().f_back.f_back.f_back.f_code.co_name
