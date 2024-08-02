@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # coding: utf-8
-from api.controller.user import create_schedule
+from api.controller.user import get_user_schedule
 import io
 import sys
 import codecs
@@ -513,16 +513,20 @@ def join_team():
     return return_param(res, request)
 
 
-@app.route('/api/user/create_schedule', methods=['POST'])
-def user_create_schedule():
-    req = check_param(request)
-    user_id = req['user_id']
-    title = req['title']
-    description = req['description']
-    start_time = req['start_time']
-    end_time = req['end_time']
-    res = create_schedule(user_id, title, description, start_time, end_time)
-    return return_param(res, request)
+@app.route('/api/user/get_user_schedule', methods=['POST'])
+def user_get_user_schedule():
+    try:
+        req = check_param(request)
+        user_id = req['user_id']
+        schedule_data = get_user_schedule(user_id)
+        return jsonify({
+            'result_cd': constant.RESULT_CODE_OK,
+            'message': constant.MESSAGE_OK_001,
+            'data': schedule_data
+        })
+    except Exception as e:
+        debug_log(e)
+        return jsonify({'result_cd': constant.RESULT_CODE_ERR_SYSTEM, 'message': str(e)}), 400
 
 
 if __name__ == "__main__":
