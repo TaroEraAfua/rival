@@ -1,6 +1,7 @@
 # coding: utf-8
 import pymysql
 from util.setting import Setting
+from .challenge import Challenge
 from sqlalchemy.orm import relationship
 import api.common.sql as format
 import datetime
@@ -20,7 +21,7 @@ class Team(object):
                  exec_type=None,game_status=None,challenge_status=None
                  ):
 
-        self.count = count
+        self.challenges = relationship("Challenge", backref="team")
         self.team_id = team_id
         self.admin = admin
         self.sign_in_time = sign_in_time
@@ -61,7 +62,6 @@ class Team(object):
         self.game_status = game_status
         self.challenge_status = challenge_status
 
-        self.challenges = relationship("Challenge", backref="team")
         self.team_members = relationship("TeamMember", backref="team")
 
     # ... rest of the class methods remain unchanged ...
