@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # coding: utf-8
+from api.controller.user import create_schedule
 import io
 import sys
 import codecs
@@ -391,7 +392,8 @@ def set_user():
     message = req['message']
 
     res = user.add_user(user_id, user_name, password, prefecture, city,
-                        gender, birth_dt, mail, image_name, image_data, height, position, ex_year, ex_width, message)
+                        gender, birth_dt, mail, image_
+name, image_data, height, position, ex_year, ex_width, message)
     return return_param(res, request)
 
 
@@ -508,6 +510,18 @@ def join_team():
     team_id = req['team_id']
     user_id = req['user_id']
     res = team.add_team_user(team_id, user_id)
+    return return_param(res, request)
+
+
+@app.route('/api/user/create_schedule', methods=['POST'])
+def user_create_schedule():
+    req = check_param(request)
+    user_id = req['user_id']
+    title = req['title']
+    description = req['description']
+    start_time = req['start_time']
+    end_time = req['end_time']
+    res = create_schedule(user_id, title, description, start_time, end_time)
     return return_param(res, request)
 
 
