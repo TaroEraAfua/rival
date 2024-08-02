@@ -1,5 +1,5 @@
 # coding: utf-8
-from ..model.user import User
+from model.user import User
 from api.common.unit import debug_log
 
 
