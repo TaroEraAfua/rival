@@ -12,6 +12,20 @@ class Logger:
         self.logger.setLevel(DEBUG)
         formatter = Formatter("[%(asctime)s] - %(message)s")
 
+        # stdout
+        # コンソールがログだらけになるため一時コメントアウト
+        # handler = StreamHandler()
+        # handler.setLevel(DEBUG)
+        # handler.setFormatter(formatter)
+        # self.logger.addHandler(handler)
+
+        # file
+        # handler = handlers.RotatingFileHandler(filename='/www/dir/log/your_log_path.log',
+        #                                        maxBytes=1048576,
+        #                                        backupCount=3,
+        #                                        encoding='utf-8'
+        #                                        )
+
         e_filename = '/var/log/rival/' + filename
 
         error_handler = handlers.RotatingFileHandler(
@@ -22,6 +36,18 @@ class Logger:
         )
         error_handler.setFormatter(formatter)
         self.logger.addHandler(error_handler)
+
+        # handler.setLevel(DEBUG)
+        # handler.setFormatter(formatter)
+        # self.logger.addHandler(handler)
+
+    def audit_log(self, timestamp, user_id, schedule_id, action):
+        audit_message = f"AUDIT - Timestamp: {timestamp}, User ID: {user_id}, Schedule ID: {schedule_id}, Action: {action}"
+        # Assuming there is a separate audit log file or database table for audit logs
+        # Here we are just using the same error log file for demonstration purposes
+        audit_filename = '/var/log/rival/audit.log'
+        with open(audit_filename, 'a') as audit_file:
+            audit_file.write(audit_message + '\n')
 
     def cre_msg(self, code, msg='System error'):
         called_filename = inspect.currentframe().f_back.f_back.f_back.f_code.co_filename
@@ -43,6 +69,3 @@ class Logger:
 
     def critical(self, msg):
         self.logger.critical(msg)
-    
-    def log_schedule_deletion(self, user_id, schedule_id):
-        self.info(f"Schedule with ID {schedule_id} has been deleted by user ID {user_id}.")
