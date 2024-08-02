@@ -12,20 +12,6 @@ class Logger:
         self.logger.setLevel(DEBUG)
         formatter = Formatter("[%(asctime)s] - %(message)s")
 
-        # stdout
-        # コンソールがログだらけになるため一時コメントアウト
-        # handler = StreamHandler()
-        # handler.setLevel(DEBUG)
-        # handler.setFormatter(formatter)
-        # self.logger.addHandler(handler)
-
-        # file
-        # handler = handlers.RotatingFileHandler(filename='/www/dir/log/your_log_path.log',
-        #                                        maxBytes=1048576,
-        #                                        backupCount=3,
-        #                                        encoding='utf-8'
-        #                                        )
-
         e_filename = '/var/log/rival/' + filename
 
         error_handler = handlers.RotatingFileHandler(
@@ -36,10 +22,6 @@ class Logger:
         )
         error_handler.setFormatter(formatter)
         self.logger.addHandler(error_handler)
-
-        # handler.setLevel(DEBUG)
-        # handler.setFormatter(formatter)
-        # self.logger.addHandler(handler)
 
     def cre_msg(self, code, msg='System error'):
         called_filename = inspect.currentframe().f_back.f_back.f_back.f_code.co_filename
@@ -61,3 +43,6 @@ class Logger:
 
     def critical(self, msg):
         self.logger.critical(msg)
+    
+    def log_schedule_deletion(self, user_id, schedule_id):
+        self.info(f"Schedule with ID {schedule_id} has been deleted by user ID {user_id}.")

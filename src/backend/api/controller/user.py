@@ -1,5 +1,8 @@
 # coding: utf-8
 import datetime
+from api.model.schedules import Schedule
+from api.common.constant import RESULT_CODE_OK, MESSAGE_OK_001, RESULT_CODE_ERR
+from util.logging import Logger
 import json
 import sys
 import os
@@ -13,6 +16,7 @@ from api.common.sql import team_sql_format, search_team_format
 from api.common.unit import convert_team_data, convert_user_data, format_return_param
 from api.model.const import Const
 
+from sqlalchemy.orm import Session
 from api.common.unit import debug_log
 
 
@@ -201,6 +205,34 @@ def add_user(user_id, user_name, password, prefecture, city,
 
     return response
 
+def delete_schedule(schedule_id, user_id):
+    session = Session()
+    logger = Logger()
+    try:
+        # Validate schedule_id and user_id
+        schedule = session.query(Schedule).filter_by(schedule_id=schedule_id, user_id=user_id).first()
+        if not schedule:
+            return format.format_return_param(RESULT_CODE_ERR, "Schedule or user not found.")
+
+        # Check permission
+        if schedule.user_id != user_id:
+            return format.format_return_param(RESULT_CODE_ERR, "User does not have permission to delete this schedule.")
+
+        # Delete the schedule
+        session.delete(schedule)
+        session.commit()
+
+        # Log the deletion
+        logger.log_schedule_deletion(user_id, schedule_id)
+
+        return format.format_return_param(RESULT_CODE_OK, MESSAGE_OK_001)
+    except Exception as e:
+        session.rollback()
+        logger.error("ERR", str(e))
+        return format.format_return_param(RESULT_CODE_ERR, "Failed to delete schedule.")
+
+    return response
+
 
 def update_user(user_id, user_name, prefecture, city, gender, birth_dt, mail,
                 image_name, image_data, height, position, ex_year, ex_width, comment):
@@ -251,7 +283,6 @@ def update_user(user_id, user_name, prefecture, city, gender, birth_dt, mail,
         )
 
     return response
-
 def check_favorite_team(user_id, team_id):
     to_day = datetime.datetime.today()
     register_dt = to_day.strftime("%Y-%m-%d")
